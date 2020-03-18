@@ -1,6 +1,6 @@
-# Demo Menu Application
+# Demo Site Application
 
-Demo Menu application for OakOS v5.0.X
+Application for OakOS v5.0.X
 
 
 ## Running locally
@@ -38,9 +38,12 @@ docker-compose down
 {
   "services": [
     {
-      "image": "index.docker.io/oaklabs/app-demo-menu:latest",
+      "image": "index.docker.io/oaklabs/app-demo-site:latest",
       "environment": {
-        "TZ": "America/Los_Angeles"
+        "PORT": "9001",
+          "API_KEY": "[secret api key]",
+          "DEMO_NAME": "my_demo",
+          "TZ": "America/Los_Angeles"
       }
     }
   ]
