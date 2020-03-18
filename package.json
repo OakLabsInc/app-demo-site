@@ -1,0 +1,31 @@
+{
+  "name": "demo-menu-application",
+  "version": "0.0.1",
+  "description": "Demo Menu app for OakOS v5.0.x",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node_modules/.bin/oak .",
+    "dev": "env $(cat .env | grep -v '#' | xargs) npm start",
+    "rebuild": "rm -rf node_modules/ package-lock.json && npm i && node_modules/.bin/oak-rebuild $(pwd)",
+    "test": "exit 0;"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OakLabsInc/app-demo-menu.git"
+  },
+  "author": "Richard Joffray <richard@joffray.com>",
+  "license": "Apache 2",
+  "bugs": {
+    "url": "https://github.com/OakLabsInc/app-demo-menu/issues"
+  },
+  "homepage": "https://github.com/OakLabsInc/app-demo-menu#readme",
+  "devDependencies": {
+    "oak": "~5.0.10"
+  },
+  "dependencies": {
+    "body-parser": "~1.19.0",
+    "express": "~4.17.1",
+    "lodash": "^4.17.15"
+  },
+  "private": true
+}
