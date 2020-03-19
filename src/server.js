@@ -62,6 +62,7 @@ app.post('/set-site', function(req, res) {
 
   window.instance.loadURL(join("file:///","data",service.environment.API_KEY,service.environment.DEMO_NAME, service.siteName, "index.html"))
   //loadWindow(opts)
+  window.focus()
  
   console.log(opts)
   res.json({
