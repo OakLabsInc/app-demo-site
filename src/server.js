@@ -56,7 +56,7 @@ app.get('/close', function(req, res) {
 })
 
 app.post('/set-site', function(req, res) {
-  console.log(req.body)
+  // console.log(req.body)
   let service = req.body
   let appInfo = req.body.data
 
@@ -64,7 +64,7 @@ app.post('/set-site', function(req, res) {
   //loadWindow(opts)
   window.focus()
  
-  console.log(opts)
+  // console.log(opts)
   res.json({
     message: "Setting Application Url",
   })
@@ -73,5 +73,5 @@ app.post('/set-site', function(req, res) {
 
 function loadWindow (opts) {
   window = oak.load(opts)
-  console.log(window)
+  // console.log(window)
 }
