@@ -51,16 +51,18 @@ app.get('/hide', function(req, res) {
 app.get('/focus', function(req, res) {
   window.focus()
 })
+app.get('/close', function(req, res) {
+  window.close()
+})
 
 app.post('/set-site', function(req, res) {
   console.log(req.body)
   let service = req.body
   let appInfo = req.body.data
-  window=null 
 
-  opts.url = join("file:///","data",service.environment.API_KEY,service.environment.DEMO_NAME, service.siteName, "index.html")
-  loadWindow(opts)
-  window.focus()
+  window.instance.loadURL(join("file:///","data",service.environment.API_KEY,service.environment.DEMO_NAME, service.siteName, "index.html"))
+  //loadWindow(opts)
+ 
   console.log(opts)
   res.json({
     message: "Setting Application Url",
