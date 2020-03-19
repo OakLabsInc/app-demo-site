@@ -12,6 +12,7 @@ swipeZone.style.left = "0"
 swipeZone.style.right = "0"
 swipeZone.style.top = "0"
 swipeZone.style.bottom = "0"
+swipeZone.zIndex = "10000"
 
 // swipeZone.style.border = "5px solid yellow"
 swipeZone.style.color = "#ffffff"
