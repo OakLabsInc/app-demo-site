@@ -1,7 +1,4 @@
 
-window.onload = function (evt) {
-    document.body.innerHTML = '<strong>boo!</strong>';
-};
 var body = document.getElementsByTagName("body")[0]
 
 var swipeZone = document.createElement("div");
