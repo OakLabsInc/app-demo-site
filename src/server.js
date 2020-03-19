@@ -26,7 +26,14 @@ let opts = {
   sslExceptions: ['localhost'],
   background: '#000000',
   transparent: true,
-  frame: false
+  frame: false,
+  scripts: [
+    {
+      name: "SwipeListener",
+      path: join(__dirname, '..', 'node_modules', 'swipe-listener')
+    }, 
+    join(__dirname, 'public', 'js', 'menu_swipe.js')
+  ]
 }
 
 app.listen(port, function () {
@@ -63,4 +70,5 @@ app.post('/set-site', function(req, res) {
 
 function loadWindow (opts) {
   window = oak.load(opts)
+  console.log(window)
 }
