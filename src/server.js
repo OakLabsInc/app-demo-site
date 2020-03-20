@@ -33,6 +33,12 @@ let opts = {
       path: join(__dirname, '..', 'node_modules', 'swipe-listener')
     }, 
     join(__dirname, 'public', 'js', 'menu_swipe.js'),
+  ],
+  flags: [
+    "--disable-gpu",
+    "--enable-transparent-visuals",
+    "--in-process-gpu",
+    "--disable-software-rasterizer"
   ]
 }
 
