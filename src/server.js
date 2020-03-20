@@ -18,7 +18,7 @@ app.use(bodyParser.json())
 app.use(express.static(publicPath))
 
 let opts = {
-  url: `http://www.meimeiboston.com/`,
+  url: `http://localhost:${port}`,
   ontop: false,
   insecure: true,
   flags: ['enable-vp8-alpha-playback'],
@@ -36,9 +36,7 @@ let opts = {
   ],
   flags: [
     "--disable-gpu",
-    "--enable-transparent-visuals",
-    "--in-process-gpu",
-    "--disable-software-rasterizer"
+    "--enable-transparent-visuals"
   ]
 }
 
