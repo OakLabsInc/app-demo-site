@@ -1,7 +1,5 @@
 FROM oaklabs/oak:5.0.10
 
-VOLUME ["/data/share"]
-
 WORKDIR /app
 
 COPY . /app

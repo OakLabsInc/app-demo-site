@@ -60,7 +60,7 @@ app.post('/set-site', function(req, res) {
   let service = req.body
   let appInfo = req.body.data
 
-  window.instance.loadURL(join("file:///","data",service.environment.API_KEY,service.environment.DEMO_NAME, service.siteName, "index.html"))
+  window.instance.loadURL(join("file:///","persistent",service.environment.API_KEY,service.environment.DEMO_NAME, service.siteName, "index.html"))
   //loadWindow(opts)
   window.focus()
  
