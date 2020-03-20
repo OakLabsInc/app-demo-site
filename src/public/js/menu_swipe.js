@@ -38,7 +38,7 @@ addStyle(`
     }
 
     .hit-zone {
-        position: absolute;
+        position: fixed;
         z-index: 100000;
         left: 10px;
         width: 50px;
