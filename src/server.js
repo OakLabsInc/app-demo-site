@@ -18,7 +18,7 @@ app.use(bodyParser.json())
 app.use(express.static(publicPath))
 
 let opts = {
-  url: `http://localhost:${port}/`,
+  url: `http://www.meimeiboston.com/`,
   ontop: false,
   insecure: true,
   flags: ['enable-vp8-alpha-playback'],
@@ -32,7 +32,7 @@ let opts = {
       name: "SwipeListener",
       path: join(__dirname, '..', 'node_modules', 'swipe-listener')
     }, 
-    join(__dirname, 'public', 'js', 'menu_swipe.js')
+    join(__dirname, 'public', 'js', 'menu_swipe.js'),
   ]
 }
 
