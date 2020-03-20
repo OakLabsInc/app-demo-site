@@ -1,5 +1,7 @@
 ---
 version: '3'
+volumes:
+  share:
 services:
   server:
     build: .
@@ -10,5 +12,6 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /dev/shm:/dev/shm
       - ./src:/app/src
+      - share:/data/share
     environment:
       - NODE_ENV=development

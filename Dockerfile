@@ -1,6 +1,6 @@
 FROM oaklabs/oak:5.0.10
 
-VOLUME ["/data"]
+VOLUME ["/data/share"]
 
 WORKDIR /app
 
