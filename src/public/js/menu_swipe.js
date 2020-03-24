@@ -64,17 +64,30 @@ var body = document.getElementsByTagName("body")[0]
 
 var hitZone = document.createElement("div");
 
-hitZone.classList.add("oakos-icon")
-hitZone.classList.add("oakos-icon-menu")
+// hitZone.classList.add("oakos-icon")
+// hitZone.classList.add("oakos-icon-menu")
 hitZone.classList.add("hit-zone")
 hitZone.setAttribute("id", "swipe-zone")
 body.appendChild(hitZone);
 
-hitZone.addEventListener('click', function (e) {
+var mouseTimer;
+function mouseDown() { 
+    mouseUp();
+    mouseTimer = window.setTimeout(execMouseDown,2000); //set timeout to fire in 2 seconds when the user presses mouse button down
+}
 
-        var xhr = new XMLHttpRequest();
+function mouseUp() { 
+    if (mouseTimer) window.clearTimeout(mouseTimer);  //cancel timer when mouse button is released
+}
+
+function execMouseDown() { 
+    var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {};
         xhr.open('GET', 'http://localhost:9000/focus');
         xhr.send()
-    
-})
+}
+
+hitZone.addEventListener("mousedown", mouseDown);
+hitZone.addEventListener("mouseup", mouseUp);  //listen for mouse up event on body, not just the element you originally clicked on
+
+
