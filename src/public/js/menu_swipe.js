@@ -71,23 +71,23 @@ hitZone.setAttribute("id", "swipe-zone")
 body.appendChild(hitZone);
 
 var mouseTimer;
-function mouseDown() { 
+function touchStart() { 
     mouseUp();
     mouseTimer = window.setTimeout(execMouseDown,2000); //set timeout to fire in 2 seconds when the user presses mouse button down
 }
 
-function mouseUp() { 
+function touchEnd() { 
     if (mouseTimer) window.clearTimeout(mouseTimer);  //cancel timer when mouse button is released
 }
 
-function execMouseDown() { 
+function execTouchStart() { 
     var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {};
         xhr.open('GET', 'http://localhost:9000/focus');
         xhr.send()
 }
 
-hitZone.addEventListener("mousedown", mouseDown);
-hitZone.addEventListener("mouseup", mouseUp);  //listen for mouse up event on body, not just the element you originally clicked on
+hitZone.addEventListener("touchstart", touchStart);
+hitZone.addEventListener("touchend", touchEnd);  //listen for mouse up event on body, not just the element you originally clicked on
 
 
