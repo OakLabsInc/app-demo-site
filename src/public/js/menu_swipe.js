@@ -40,17 +40,19 @@ addStyle(`
     .hit-zone {
         position: fixed;
         z-index: 100000;
-        left: 10px;
+        left: 0;
         width: 50px;
         height: 50px;
-        top: 10px;
+        top: 0;
         color: rgb(9,188,255);
         display: flex;
         justify-conter: center;
         align-items: center;
-        padding: 5px 10px
-        margin: 10px;
-        cursor: pointer
+        padding: 0
+        margin: 0;
+        cursor: none
+        -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
+        -webkit-tap-highlight-color:  transparent; 
     
     }
     .oakos-icon {
@@ -70,14 +72,14 @@ hitZone.classList.add("hit-zone")
 hitZone.setAttribute("id", "swipe-zone")
 body.appendChild(hitZone);
 
-var mouseTimer;
+var touchTimer;
 function touchStart() { 
-    mouseUp();
-    mouseTimer = window.setTimeout(execMouseDown,2000); //set timeout to fire in 2 seconds when the user presses mouse button down
+    touchEnd();
+    touchTimer = window.setTimeout(execTouchStart,2000); //set timeout to fire in 2 seconds when the user presses mouse button down
 }
 
 function touchEnd() { 
-    if (mouseTimer) window.clearTimeout(mouseTimer);  //cancel timer when mouse button is released
+    if (touchTimer) window.clearTimeout(touchTimer);  //cancel timer when mouse button is released
 }
 
 function execTouchStart() { 
