@@ -10,7 +10,8 @@ const express = require('express')
 const app = express()
 
 const port = process.env.PORT ? _.toNumber(process.env.PORT) : 9001
-
+const printer = require(join(__dirname, 'print-receipt'))
+const printerName = process.env.PRINTER_NAME || "http://localhost:631/printers/TM-T88V"
 
 let publicPath = join(__dirname, 'public')
 let window = null
@@ -59,6 +60,26 @@ app.get('/close', function(req, res) {
   window.close()
 })
 
+app.post('/printer-attributes', async function(req, res) {
+  let printers = await printer.getPrinterAttributes(printerName, function(name, ppd){
+    res.json({
+      message: "Sent To Printer",
+      data: {
+        ppd: ppd,
+        name: name
+      }
+    })
+  })
+})
+
+app.post('/print-receipt', async function(req, res) {
+  let receipt = await printer.printReceipt(printerName, function(data){
+    res.json({
+      message: "Receipt Sent To Printer",
+      data: data
+    })
+  })
+})
 app.post('/set-site', function(req, res) {
   // console.log(req.body)
   let service = req.body
