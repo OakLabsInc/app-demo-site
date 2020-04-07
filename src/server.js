@@ -15,6 +15,7 @@ const printerName = process.env.PRINTER_NAME || "http://localhost:631/printers/T
 
 let publicPath = join(__dirname, 'public')
 let window = null
+let service = null
 app.use(bodyParser.json())
 app.use(express.static(publicPath))
 
@@ -45,6 +46,11 @@ app.listen(port, function () {
   oak.on('ready', () => loadWindow(opts))
 })
 
+app.get('/env', function(req, res) {
+  let env = {...process.env}
+  res.json(env)
+})
+
 app.get('/show', function(req, res) {
   window.show()
 })
@@ -73,7 +79,10 @@ app.post('/printer-attributes', async function(req, res) {
 })
 
 app.post('/print-receipt', async function(req, res) {
-  let receipt = await printer.printReceipt(printerName, function(data){
+  console.log("Print request", req.body)
+  req.body.service = service
+  
+  let receipt = await printer.printReceipt(printerName, req.body, function(data){
     res.json({
       message: "Receipt Sent To Printer",
       data: data
@@ -82,7 +91,8 @@ app.post('/print-receipt', async function(req, res) {
 })
 app.post('/set-site', function(req, res) {
   // console.log(req.body)
-  let service = req.body
+  service = req.body
+  process.env.SITE_NAME = service.siteName
   let appInfo = req.body.data
 
   window.instance.loadURL(join("file:///","persistent",service.environment.API_KEY,service.environment.DEMO_NAME, service.siteName, "index.html"))

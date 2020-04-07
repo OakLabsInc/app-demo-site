@@ -12,7 +12,12 @@
         ],
         "env":{
           "PLATFORM_HOST":"192.168.0.66:443",
-          "NODE_ENV":"development"
+          "NODE_ENV":"development",
+          "API_KEY": "g5YIWkepdZYBezKjsZywnp8IEXu2",
+          "DEMO_NAME":"vashon",
+          "SITE_NAME":"pizza",
+          "PORT":"9001",
+          "TZ":"America/Los_Angeles"
         }
       }
     ]
