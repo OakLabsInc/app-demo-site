@@ -24,7 +24,7 @@ function generateHr(doc) {
 }
 
 function generateImage(doc, imageUrl, x) {
-  doc.image(imageUrl, x, top, {width: x} )
+  doc.image(imageUrl, (x / 2), top, {width: x} )
   top += x
 }
 
@@ -34,6 +34,11 @@ function itemLine(doc, name, price){
   doc.moveUp()
   doc.text(newPrice,{align:'right', width: (lineWidth - left)} )
   top += lineHeight
+}
+
+function emptyText()
+{
+  doc.text(" ")
 }
 
 function formatCurrency(price) {
@@ -68,8 +73,9 @@ async function printReceipt (printerName, data) {
   itemLine(doc, "Tax 8.6%", tax)
   itemLine(doc, "Total", total)
   generateImage(doc,qrcodeUrl, 100)
-  doc.moveDown()
-  doc.moveDown()
+  emptyText()
+  emptyText()
+  emptyText()
 
   doc.pipe(concat(function (data) {
     var printer = ipp.Printer(printerName);
