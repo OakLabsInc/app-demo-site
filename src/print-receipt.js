@@ -39,6 +39,7 @@ function itemLine(doc, name, price){
 function emptyText(doc)
 {
   doc.text(" ")
+  doc.moveDown()
 }
 
 function formatCurrency(price) {
@@ -61,8 +62,6 @@ async function printReceipt (printerName, data) {
 
   doc.fontSize(12)
   emptyText(doc)
-  emptyText(doc)
-  emptyText(doc)
   generateImage(doc,logoUrl, 100)
   generateHr(doc)
   for(i in cart) {
@@ -75,8 +74,8 @@ async function printReceipt (printerName, data) {
   generateHr(doc)
   itemLine(doc, "Tax 8.6%", tax)
   itemLine(doc, "Total", total)
-  generateImage(doc,qrcodeUrl, 100)
   emptyText(doc)
+  generateImage(doc,qrcodeUrl, 100)
   emptyText(doc)
   emptyText(doc)
 
