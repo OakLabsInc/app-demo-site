@@ -60,6 +60,9 @@ async function printReceipt (printerName, data) {
   console.log(logoUrl, qrcodeUrl)
 
   doc.fontSize(12)
+  emptyText(doc)
+  emptyText(doc)
+  emptyText(doc)
   generateImage(doc,logoUrl, 100)
   generateHr(doc)
   for(i in cart) {
