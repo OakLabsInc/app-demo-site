@@ -36,7 +36,7 @@ function itemLine(doc, name, price){
   top += lineHeight
 }
 
-function emptyText()
+function emptyText(doc)
 {
   doc.text(" ")
 }
@@ -73,27 +73,27 @@ async function printReceipt (printerName, data) {
   itemLine(doc, "Tax 8.6%", tax)
   itemLine(doc, "Total", total)
   generateImage(doc,qrcodeUrl, 100)
-  emptyText()
-  emptyText()
-  emptyText()
+  emptyText(doc)
+  emptyText(doc)
+  emptyText(doc)
 
-  doc.pipe(concat(function (data) {
-    var printer = ipp.Printer(printerName);
-    var msg = {
-      "operation-attributes-tag": {
-        "requesting-user-name": "Pizza Receipt",
-        "job-name": "receipt.pdf",
-        "document-format": "application/pdf"
-      }
-      , data: data
-    };
-    printer.execute("Print-Job", msg, function(err, res){
-      console.log(err);
-      console.log(res);
-    });
-  }));
+  // doc.pipe(concat(function (data) {
+  //   var printer = ipp.Printer(printerName);
+  //   var msg = {
+  //     "operation-attributes-tag": {
+  //       "requesting-user-name": "Pizza Receipt",
+  //       "job-name": "receipt.pdf",
+  //       "document-format": "application/pdf"
+  //     }
+  //     , data: data
+  //   };
+  //   printer.execute("Print-Job", msg, function(err, res){
+  //     console.log(err);
+  //     console.log(res);
+  //   });
+  // }));
   doc.end();
-  //doc.pipe(fs.createWriteStream("receipt.pdf"));
+  doc.pipe(fs.createWriteStream("receipt.pdf"));
 }
 
 async function getPrinterAttributes(name, cb) {
