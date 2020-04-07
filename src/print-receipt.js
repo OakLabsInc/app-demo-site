@@ -10,8 +10,8 @@ const capitalize = (s) => {
 }
 
 let top = 10
-let left = 20
-let lineWidth = 260
+let left = 10
+let lineWidth = 200
 let lineHeight = 20
 
 function generateHr(doc) {
@@ -21,8 +21,8 @@ function generateHr(doc) {
       .lineTo(lineWidth, top)
       .stroke()
   top += (lineHeight / 2)
-
 }
+
 function generateImage(doc, imageUrl, x) {
   doc.image(imageUrl, x, top, {width: x} )
   top += x
@@ -35,6 +35,7 @@ function itemLine(doc, name, price){
   doc.text(newPrice,{align:'right', width: (lineWidth - left)} )
   top += lineHeight
 }
+
 function formatCurrency(price) {
   let newPrice = parseFloat(price).toFixed(2).toString()
   return "$" + newPrice
@@ -53,6 +54,7 @@ async function printReceipt (printerName, data) {
   let qrcodeUrl = join("/persistent", service.environment.API_KEY, service.environment.DEMO_NAME, service.siteName, "images","printer-qrcode.png")
   console.log(logoUrl, qrcodeUrl)
 
+  doc.fontSize(12)
   generateImage(doc,logoUrl, 100)
   generateHr(doc)
   for(i in cart) {
@@ -65,8 +67,9 @@ async function printReceipt (printerName, data) {
   generateHr(doc)
   itemLine(doc, "Tax 8.6%", tax)
   itemLine(doc, "Total", total)
-
   generateImage(doc,qrcodeUrl, 100)
+  doc.moveDown()
+  doc.moveDown()
 
   doc.pipe(concat(function (data) {
     var printer = ipp.Printer(printerName);
