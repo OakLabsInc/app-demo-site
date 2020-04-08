@@ -13,7 +13,7 @@ const port = process.env.PORT ? _.toNumber(process.env.PORT) : 9001
 const printer = require(join(__dirname, 'print-receipt'))
 const printerName = process.env.PRINTER_NAME || "http://localhost:631/printers/TM-T88V"
 
-let publicPath = join(__dirname, 'public')
+let publicPath = "/persistent"
 let window = null
 let service = null
 app.use(bodyParser.json())
@@ -89,13 +89,14 @@ app.post('/print-receipt', async function(req, res) {
     })
   })
 })
-app.post('/set-site', function(req, res) {
+app.post('/set-site', function(req, res) { 
   // console.log(req.body)
   service = req.body
   process.env.SITE_NAME = service.siteName
   let appInfo = req.body.data
-
-  window.instance.loadURL(join("file:///","persistent",service.environment.API_KEY,service.environment.DEMO_NAME, service.siteName, "index.html"))
+  publicPath = join("/persistent",service.environment.API_KEY,service.environment.DEMO_NAME, service.siteName)
+ 
+  window.instance.loadURL(join(`http://localhost:${port}`,service.environment.API_KEY,service.environment.DEMO_NAME, service.siteName,"index.html"))
   //loadWindow(opts)
   window.focus()
  
