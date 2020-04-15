@@ -40,6 +40,7 @@ addStyle(`
         position: absolute;
         right: 0;
         bottom: 0;
+        z-index: 500000;
     }
     .hit-zone {
         position: fixed;
