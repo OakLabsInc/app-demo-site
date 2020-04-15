@@ -25,7 +25,6 @@ let opts = {
   ontop: false,
   insecure: true,
   allowRunningInsecureContent: true,
-  flags: ['enable-vp8-alpha-playback'],
   size: "1080x1920",
   sslExceptions: ['localhost'],
   background: '#000000',
@@ -39,8 +38,9 @@ let opts = {
     join(__dirname, 'public', 'js', 'menu_swipe.js'),
   ],
   flags: [
-    "--disable-gpu",
-    "--enable-transparent-visuals"
+    "enable-vp8-alpha-playback",
+    "disable-gpu",
+    "enable-transparent-visuals"
   ]
 }
 
