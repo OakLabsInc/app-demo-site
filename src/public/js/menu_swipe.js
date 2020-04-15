@@ -36,7 +36,11 @@ addStyle(`
     .oakos-icon-menu:before {
         content: "\\e9bd";
     }
-
+    #qrcode {
+        position: absolute;
+        right: 0;
+        bottom 0;
+    }
     .hit-zone {
         position: fixed;
         z-index: 100000;
@@ -63,13 +67,18 @@ addStyle(`
 
 
 var body = document.getElementsByTagName("body")[0]
-
+var metaTag = document.createElement("meta")
+{/* <meta http-equiv="Content-Security-Policy" content="default-src 'self'"> */}
 var hitZone = document.createElement("div");
-
+var qrcode = document.createElement("img")
 // hitZone.classList.add("oakos-icon")
 // hitZone.classList.add("oakos-icon-menu")
 hitZone.classList.add("hit-zone")
 hitZone.setAttribute("id", "swipe-zone")
+metaTag.setAttribute("http-equiv","Content-Security-Policy")
+metaTag.setAttribute("content","style-src 'self' img-src 'self' default-src 'self' http://localhost:9200")
+qrcode.setAttribute("src", "http://localhost:9200/qrcode.png")
+qrcode.setAttribute("id", "qrcode")
 body.appendChild(hitZone);
 
 var touchTimer;
