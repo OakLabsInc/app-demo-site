@@ -21,8 +21,10 @@ app.use(express.static(publicPath))
 
 let opts = {
   url: `http://localhost:${port}`,
+  
   ontop: false,
   insecure: true,
+  allowRunningInsecureContent: true,
   flags: ['enable-vp8-alpha-playback'],
   size: "1080x1920",
   sslExceptions: ['localhost'],
@@ -109,5 +111,8 @@ app.post('/set-site', function(req, res) {
 
 function loadWindow (opts) {
   window = oak.load(opts)
+  window.instance.webPreferences = {
+    allowRunningInsecureContent: true
+  }
   // console.log(window)
 }

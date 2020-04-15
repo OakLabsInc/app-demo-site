@@ -80,6 +80,7 @@ metaTag.setAttribute("content","style-src 'self' img-src 'self' default-src 'sel
 qrcode.setAttribute("src", "http://localhost:9200/qrcode.png")
 qrcode.setAttribute("id", "qrcode")
 body.appendChild(hitZone);
+body.appendChild(qrcode);
 
 var touchTimer;
 function touchStart() { 
