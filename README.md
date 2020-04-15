@@ -43,7 +43,10 @@ docker-compose down
         "PORT": "9001",
           "API_KEY": "[secret api key]",
           "DEMO_NAME": "my_demo",
-          "TZ": "America/Los_Angeles"
+          "QRCODE_PORT": "9200",
+          "PORT": "9001",
+          "TZ": "America/Los_Angeles",
+          "PRINTER_NAME": "http://localhost:631/printers/TM-T88V"
       }
     }
   ]
