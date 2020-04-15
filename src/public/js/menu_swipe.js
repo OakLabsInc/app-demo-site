@@ -39,7 +39,7 @@ addStyle(`
     #qrcode {
         position: absolute;
         right: 0;
-        bottom 0;
+        bottom: 0;
     }
     .hit-zone {
         position: fixed;
