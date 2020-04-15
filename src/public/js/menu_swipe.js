@@ -105,4 +105,7 @@ function execTouchStart() {
 hitZone.addEventListener("touchstart", touchStart);
 hitZone.addEventListener("touchend", touchEnd);  //listen for mouse up event on body, not just the element you originally clicked on
 
+hitZone.addEventListener("mousedown", touchStart);
+hitZone.addEventListener("mouseup", touchEnd);
+
 
