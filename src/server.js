@@ -111,6 +111,7 @@ app.post('/set-site', function(req, res) {
 
 function loadWindow (opts) {
   window = oak.load(opts)
+  window.instance.setResizable(false)
   window.instance.webPreferences = {
     allowRunningInsecureContent: true
   }
