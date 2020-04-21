@@ -54,4 +54,16 @@ docker-compose down
 
 ```
 
+Here are the possible environmental variable
+
+``` bash
+API_KEY=g5YIWkepdZYBezKjsZywnp8IEXu2
+DEMO_NAME=vashon
+PORT=9001
+QRCODE_PORT=8200
+QRCODE_HOST=[Host Domain or IP]
+QRCODE_LOCAL="true"
+TZ=America/Los_Angeles
+```
+
 This snippet results can be seen in the application logs on the OakOS Dashboard

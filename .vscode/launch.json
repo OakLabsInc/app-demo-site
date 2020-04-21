@@ -11,12 +11,15 @@
           "src/server.js",
         ],
         "env":{
-          "PLATFORM_HOST":"192.168.0.66:443",
+          "PLATFORM_HOST":"192.168.86.207:443",
           "NODE_ENV":"development",
           "API_KEY": "g5YIWkepdZYBezKjsZywnp8IEXu2",
           "DEMO_NAME":"vashon",
           "SITE_NAME":"pizza",
           "PORT":"9001",
+          "QRCODE_PORT":"8200",
+          "QRCODE_LOCAL":"true",
+          "QRCODE_HOST":"192.168.86.207",
           "TZ":"America/Los_Angeles"
         }
       }

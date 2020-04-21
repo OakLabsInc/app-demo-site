@@ -80,7 +80,11 @@ hitZone.classList.add("hit-zone")
 hitZone.setAttribute("id", "swipe-zone")
 metaTag.setAttribute("http-equiv","Content-Security-Policy")
 metaTag.setAttribute("content",`style-src 'self' img-src 'self' default-src 'self' http://localhost:${window.env.QRCODE_PORT}`)
-qrcode.setAttribute("src", `http://localhost:${window.env.QRCODE_PORT}/qrcode.png`)
+if (process.env.QRCODE_LOCAL === "true") {
+    qrcode.setAttribute("src", 'file:///persistent/qrcode.png')
+} else {
+    qrcode.setAttribute("src", `http://localhost:${process.env.QRCODE_PORT}/qrcode.png`)
+}
 qrcode.setAttribute("id", "qrcode")
 body.appendChild(hitZone);
 body.appendChild(qrcode);

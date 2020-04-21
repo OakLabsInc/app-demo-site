@@ -3,13 +3,17 @@ const oak = require('oak')
 const { join } = require('path')
 const _ = require('lodash')
 const bodyParser = require('body-parser')
-
+const request = require('request')
+const QRCode = require('qrcode')
+const fs = require('fs')
 oak.catchErrors()
 
 const express = require('express')
 const app = express()
 
 const port = process.env.PORT ? _.toNumber(process.env.PORT) : 9001
+const qrcodeJsonHost= process.env.QRCODE_HOST || `localhost`
+const qrcodeJsonUrl = `http://${qrcodeJsonHost}:${process.env.QRCODE_PORT}/qrcode.json`
 const printer = require(join(__dirname, 'print-receipt'))
 const printerName = process.env.PRINTER_NAME || "http://localhost:631/printers/TM-T88V"
 
@@ -18,6 +22,16 @@ let window = null
 let service = null
 app.use(bodyParser.json())
 app.use(express.static(publicPath))
+
+request(qrcodeJsonUrl, { json: true }, (err, res, body) => {
+  if (err) { return console.log(err); }
+  let remoteTouchpadUrl = body.machine.replace(/[0-9.]+:/i, "covid.oak.host:")
+  console.log(body.machine.replace(/[0-9.]+:/i, "covid.oak.host:"));
+  QRCode.toFile(join("/persistent","qrcode.png"),remoteTouchpadUrl, {
+    width: 111
+  })
+
+});
 
 let opts = {
   url: `http://localhost:${port}`,
