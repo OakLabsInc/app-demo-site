@@ -17,8 +17,8 @@
           "DEMO_NAME":"vashon",
           "SITE_NAME":"pizza",
           "PORT":"9001",
+          "HOST_DOMAIN": "covid.oak.host",
           "QRCODE_PORT":"8200",
-          "QRCODE_LOCAL":"true",
           "QRCODE_HOST":"192.168.86.207",
           "TZ":"America/Los_Angeles"
         }

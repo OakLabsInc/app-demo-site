@@ -23,15 +23,17 @@ let service = null
 app.use(bodyParser.json())
 app.use(express.static(publicPath))
 
-request(qrcodeJsonUrl, { json: true }, (err, res, body) => {
-  if (err) { return console.log(err); }
-  let remoteTouchpadUrl = body.machine.replace(/[0-9.]+:/i, "covid.oak.host:")
-  console.log(body.machine.replace(/[0-9.]+:/i, "covid.oak.host:"));
-  QRCode.toFile(join("/persistent","qrcode.png"),remoteTouchpadUrl, {
-    width: 111
-  })
-
-});
+if(process.env.HOST_DOMAIN) {
+  request(qrcodeJsonUrl, { json: true }, (err, res, body) => {
+    if (err) { return console.log(err); }
+    let remoteTouchpadUrl = body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`)
+    console.log(body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`));
+    QRCode.toFile(join("/persistent","qrcode.png"),remoteTouchpadUrl, {
+      width: 111
+    })
+  
+  });
+}
 
 let opts = {
   url: `http://localhost:${port}`,
