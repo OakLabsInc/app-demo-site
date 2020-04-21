@@ -60,7 +60,7 @@ async function printReceipt (printerName, data) {
   let qrcodeUrl = join("/persistent", service.environment.API_KEY, service.environment.DEMO_NAME, service.siteName, "images","printer-qrcode.png")
   console.log(logoUrl, qrcodeUrl)
 
-  doc.fontSize(12)
+  doc.fontSize(10)
   emptyText(doc)
   generateImage(doc,logoUrl, 100)
   generateHr(doc)
