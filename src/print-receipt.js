@@ -61,6 +61,8 @@ async function printReceipt (printerName, data) {
   console.log(logoUrl, qrcodeUrl)
 
   doc.fontSize(10)
+  generateHr(doc)
+  emptyText(doc)
   emptyText(doc)
   generateImage(doc,logoUrl, 100)
   generateHr(doc)
@@ -80,9 +82,11 @@ async function printReceipt (printerName, data) {
   itemLine(doc, "Tax 8.6%", tax)
   itemLine(doc, "Total", total)
   emptyText(doc)
+  generateHr(doc)
   generateImage(doc,qrcodeUrl, 100)
   emptyText(doc)
   emptyText(doc)
+  generateHr(doc)
 
   doc.pipe(concat(function (data) {
     var printer = ipp.Printer(printerName);
