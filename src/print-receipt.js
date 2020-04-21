@@ -65,7 +65,12 @@ async function printReceipt (printerName, data) {
   generateImage(doc,logoUrl, 100)
   generateHr(doc)
   for(i in cart) {
-    itemLine(doc, capitalize(cart[i].name) + " Pizza", cart[i].price)
+    if(cart[i].hasOwnProperty('sale')) {
+      itemLine(doc, capitalize(cart[i].name) , cart[i].sale)
+    }else {
+      itemLine(doc, capitalize(cart[i].name) , cart[i].price)
+    }
+    
     for(m in cart[i].modifiers) {
       itemLine(doc,"   " + capitalize(cart[i].modifiers[m].name) + " Extra", cart[i].modifiers[m].price)
     }
