@@ -3,7 +3,7 @@ version: '3'
 services:
   server:
     build: .
-    image: index.docker.io/oaklabs/app-demo-menu:latest
+    image: index.docker.io/oaklabs/app-demo-site:latest
     devices:
       - /dev/dri
     volumes:
