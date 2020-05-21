@@ -118,6 +118,7 @@ app.post('/set-site', function(req, res) {
   window.instance.loadURL(join(`http://localhost:${port}`,service.environment.API_KEY,service.environment.DEMO_NAME, service.siteName,"index.html"))
   //loadWindow(opts)
   window.focus()
+  window.send('env-sent',{...process.env})
  
   // console.log(opts)
   res.json({
