@@ -132,10 +132,10 @@ app.post('/send-cart', function (req, res) {
   let terminalIp = process.env.TERMINAL_IP || "192.168.86.245"
   let request = {
     "cart": {
-      "total": req.body.total.toString(),
+      "total": req.body.subtotal.toString(),
       "taxRate": req.body.taxRate.toString(),
       "tax": req.body.tax.toString(),
-      "grandTotal": req.body.grandTotal.toString()
+      "grandTotal": req.body.total.toString()
     },
     "terminalIp": terminalIp
   }
