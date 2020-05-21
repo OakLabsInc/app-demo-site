@@ -118,7 +118,9 @@ app.post('/set-site', function(req, res) {
   window.instance.loadURL(join(`http://localhost:${port}`,service.environment.API_KEY,service.environment.DEMO_NAME, service.siteName,"index.html"))
   //loadWindow(opts)
   window.focus()
-  window.send('env-sent',{...process.env})
+  setTimeout(function(){
+    window.send('env-sent',{...process.env})
+  },2000)
  
   // console.log(opts)
   res.json({
@@ -165,5 +167,6 @@ function loadWindow (opts) {
   window.instance.webPreferences = {
     allowRunningInsecureContent: true
   }
+  window.send('env-sent',{...process.env})
   // console.log(window)
 }
