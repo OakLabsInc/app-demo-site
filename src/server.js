@@ -3,6 +3,7 @@ const oak = require('oak')
 const { join } = require('path')
 const _ = require('lodash')
 const bodyParser = require('body-parser')
+const axios = require('axios')
 const request = require('request')
 const QRCode = require('qrcode')
 const fs = require('fs')
@@ -122,6 +123,38 @@ app.post('/set-site', function(req, res) {
   res.json({
     message: "Setting Application Url",
   })
+})
+
+app.post('/send-cart', function (req, res) {
+  //console.log(req.body)
+  let paymentPort = process.env.PAYMENT_PORT || 9002
+  let paymentHost = process.env.PAYMENT_HOST || "localhost"
+  let terminalIp = process.env.TERMINAL_IP || "192.168.86.245"
+  let request = {
+    "cart": {
+      "total": req.body.total.toString(),
+      "taxRate": req.body.taxRate.toString(),
+      "tax": req.body.tax.toString(),
+      "grandTotal": req.body.grandTotal.toString()
+    },
+    "terminalIp": terminalIp
+  }
+  console.log(request)
+  axios.post(`http://${paymentHost}:${paymentPort}`, request)
+    .then(res => {
+      console.log(`statusCode: ${res.statusCode}`)
+      console.log("payment-response: ", res)
+      window.send('payment-response', res)
+    })
+    .catch(error => {
+      console.error(error)
+    })
+  res.json({
+    message: "Object Sent to payment component",
+    cart: request
+  })
+
+  
 })
 
 
