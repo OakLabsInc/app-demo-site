@@ -136,7 +136,7 @@ app.post('/send-cart', function (req, res) {
   let request = {
     "cart": {
       "total": parseFloat(req.body.subtotal).toFixed(2).toString(),
-      "taxRate": parseFloat(req.body.taxRate).toFixed(2).toString(),
+      "taxRate": parseFloat(req.body.taxRate).toFixed(3).toString(),
       "tax": parseFloat(req.body.tax).toFixed(2).toString(),
       "grandTotal": parseFloat(req.body.total).toFixed(2).toString()
     },
@@ -145,8 +145,8 @@ app.post('/send-cart', function (req, res) {
   console.log(request)
   axios.post(`http://${paymentHost}:${paymentPort}`, request)
     .then(res => {
-      console.log(`statusCode: ${res.statusCode}`)
-      console.log("payment-response: ", res)
+      // console.log(`statusCode: ${res.statusCode}`)
+      console.log("SENDING: payment-response: ")
       window.send('payment-response', res)
     })
     .catch(error => {

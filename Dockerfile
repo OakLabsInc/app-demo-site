@@ -5,14 +5,11 @@ WORKDIR /app
 COPY . /app
 
 RUN npm i --progress=false --loglevel="error" \
-    && npm cache clean --force \
-    && apt-get update \
-    && apt-get install -y unclutter
+    && npm cache clean --force 
 
 
 ENV NODE_ENV=production \
     ELECTRON_ENABLE_SECURITY_WARNINGS=false
 
-EXPOSE 9001
 
-CMD ["/app/src/server.js", "unclutter -idle 3"]
+CMD ["/app/src/server.js"]
