@@ -187,10 +187,10 @@ function runNetstat() {
       createQRCode()
     }
   }, function (data) {
-    console.log("port type: ", typeof data.local.port)
-    createQRCode()
-    if(data.local.port === 8855 ){
+    if(data.local.port == 8855 ){
       console.log("################ netstat line ###################\n", data)
+      console.log("port type: ", typeof data.local.port)
+      createQRCode()
         window.send('setQrCodeState', {
           state: data.state.toLowerCase()
         })
