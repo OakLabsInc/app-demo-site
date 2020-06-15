@@ -186,10 +186,12 @@ function runNetstat() {
       //console.log("################ netstat done ###################\n", JSON.stringify(item, null, 2))
     }
   }, function (data) {
-      // a single line of data read from netstat
-      console.log("################ netstat line ###################\n", JSON.stringify(data, null, 2))
-      console.log("port type: ", typeof data.local.port)
-      createQRCode()
+
+      if(data.local.port === 8855 ){
+        console.log("################ netstat line ###################\n", JSON.stringify(data, null, 2))
+        console.log("port type: ", typeof data.local.port)
+        createQRCode()
+      }
   })
 }
 
