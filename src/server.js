@@ -7,6 +7,9 @@ const axios = require('axios')
 const request = require('request')
 const QRCode = require('qrcode')
 const fs = require('fs')
+var netstat = require('node-netstat')
+var CronJob = require('cron').CronJob;
+
 oak.catchErrors()
 
 const express = require('express')
@@ -169,4 +172,23 @@ function loadWindow (opts) {
   }
   window.send('env-sent',{...process.env})
   // console.log(window)
+
+  
 }
+
+var job = new CronJob('59 * * * * *', function() {
+  console.log('You will see this message every minute');
+  netstat({
+      done: function(item) {
+        console.log("###################################\n", JSON.stringify(item, null, 2))
+      },
+      filter: {
+          pid: 8200,
+          protocol: 'tcp'
+      }
+  }, function (data) {
+      // a single line of data read from netstat
+      console.log("###################################\n", JSON.stringify(data, null, 2))
+  })
+}, null, true, 'America/Los_Angeles');
+job.start();
