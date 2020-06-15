@@ -6,7 +6,7 @@ COPY . /app
 
 RUN npm i --progress=false --loglevel="error" \
     && npm cache clean --force \
-    && pat-get update \
+    && apt-get update \
     && apt-get install net-tools
 
 
