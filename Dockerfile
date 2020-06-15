@@ -5,7 +5,9 @@ WORKDIR /app
 COPY . /app
 
 RUN npm i --progress=false --loglevel="error" \
-    && npm cache clean --force 
+    && npm cache clean --force \
+    && pat-get update \
+    && apt-get install net-tools
 
 
 ENV NODE_ENV=production \
