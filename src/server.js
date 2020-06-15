@@ -183,24 +183,19 @@ function createQRCode() {
 function runNetstat() {
   netstat({
     done: function(item) {
-      console.log("################ netstat done ###################\n", JSON.stringify(item, null, 2))
-      createQRCode()
-    },
-    filter: {
-        pid: 8855,
-        protocol: 'tcp'
+      //console.log("################ netstat done ###################\n", JSON.stringify(item, null, 2))
     }
   }, function (data) {
       // a single line of data read from netstat
       console.log("################ netstat line ###################\n", JSON.stringify(data, null, 2))
+      console.log("port type: ", typeof data.local.port)
       createQRCode()
   })
 }
 
 var job = new CronJob('59 * * * * *', function() {
-  //console.log('You will see this message every minute');
   runNetstat()
-
 }, null, true, 'America/Los_Angeles');
+
 job.start();
 createQRCode()
