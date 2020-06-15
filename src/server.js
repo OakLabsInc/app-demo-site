@@ -186,11 +186,13 @@ function runNetstat() {
       //console.log("################ netstat done ###################\n", JSON.stringify(item, null, 2))
     }
   }, function (data) {
-
+    console.log("################ netstat line ###################\n", JSON.stringify(data, null, 2))
       if(data.local.port === 8855 ){
-        console.log("################ netstat line ###################\n", JSON.stringify(data, null, 2))
         console.log("port type: ", typeof data.local.port)
         createQRCode()
+        window.send('setQrCodeState', {
+          state: data.state.toLowerCase()
+        })
       }
   })
 }
