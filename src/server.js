@@ -171,7 +171,7 @@ function createQRCode() {
     request(qrcodeJsonUrl, { json: true }, (err, res, body) => {
       if (err) { return console.log(err); }
       let remoteTouchpadUrl = body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`)
-      console.log(body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`));
+      console.log("################ qrcode url ###################\n", body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`));
       QRCode.toFile(join("/persistent","qrcode.png"),remoteTouchpadUrl, {
         width: 111
       })
@@ -183,8 +183,6 @@ function createQRCode() {
 function runNetstat() {
   netstat({}, function (data) {
     if(data.local.port == 8855 && data.state == 'LISTEN'){
-      console.log("################ netstat line ###################\n", data)
-      console.log("port type: ", typeof data.local.port)
       createQRCode()
         window.send('setQrCodeState', {
           state: data.state.toLowerCase()
