@@ -27,17 +27,7 @@ let service = null
 app.use(bodyParser.json())
 app.use(express.static(publicPath))
 
-if(process.env.HOST_DOMAIN) {
-  request(qrcodeJsonUrl, { json: true }, (err, res, body) => {
-    if (err) { return console.log(err); }
-    let remoteTouchpadUrl = body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`)
-    console.log(body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`));
-    QRCode.toFile(join("/persistent","qrcode.png"),remoteTouchpadUrl, {
-      width: 111
-    })
-  
-  });
-}
+
 
 let opts = {
   url: `http://localhost:${port}`,
@@ -176,19 +166,41 @@ function loadWindow (opts) {
   
 }
 
-var job = new CronJob('59 * * * * *', function() {
-  console.log('You will see this message every minute');
+function createQRCode() {
+  if(process.env.HOST_DOMAIN) {
+    request(qrcodeJsonUrl, { json: true }, (err, res, body) => {
+      if (err) { return console.log(err); }
+      let remoteTouchpadUrl = body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`)
+      console.log(body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`));
+      QRCode.toFile(join("/persistent","qrcode.png"),remoteTouchpadUrl, {
+        width: 111
+      })
+    
+    });
+  }
+}
+
+function runNetstat() {
   netstat({
-      done: function(item) {
-        console.log("###################################\n", JSON.stringify(item, null, 2))
-      },
-      filter: {
-          pid: 8200,
-          protocol: 'tcp'
-      }
+    done: function(item) {
+      console.log("################ netstat done ###################\n", JSON.stringify(item, null, 2))
+      createQRCode()
+    },
+    filter: {
+        pid: 8855,
+        protocol: 'tcp'
+    }
   }, function (data) {
       // a single line of data read from netstat
-      console.log("###################################\n", JSON.stringify(data, null, 2))
+      console.log("################ netstat line ###################\n", JSON.stringify(data, null, 2))
+      createQRCode()
   })
+}
+
+var job = new CronJob('59 * * * * *', function() {
+  //console.log('You will see this message every minute');
+  runNetstat()
+
 }, null, true, 'America/Los_Angeles');
 job.start();
+createQRCode()
