@@ -183,6 +183,7 @@ function createQRCode() {
 function runNetstat() {
   netstat({}, function (data) {
     if(data.local.port == 8855 && data.state == 'LISTEN'){
+      console.log("################ netstat line ###################\n", data)
       createQRCode()
         window.send('setQrCodeState', {
           state: data.state.toLowerCase()
