@@ -181,13 +181,8 @@ function createQRCode() {
 }
 
 function runNetstat() {
-  netstat({
-    done: function(item) {
-      console.log("################ netstat done ###################\n", item)
-      createQRCode()
-    }
-  }, function (data) {
-    if(data.local.port == 8855 ){
+  netstat({}, function (data) {
+    if(data.local.port == 8855 && data.state == 'LISTEN'){
       console.log("################ netstat line ###################\n", data)
       console.log("port type: ", typeof data.local.port)
       createQRCode()
