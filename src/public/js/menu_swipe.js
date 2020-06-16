@@ -43,7 +43,6 @@ addStyle(`
         right: 0;
         bottom: 0;
         z-index: 500000;
-        display: none;
 
     }
     .qrcode.listen {
