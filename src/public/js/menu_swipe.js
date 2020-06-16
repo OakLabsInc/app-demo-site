@@ -45,12 +45,21 @@ addStyle(`
         z-index: 500000;
 
     }
+    #qrcode.listen {
+        display: block;
+    }
+
+    #qrcode.established {
+        display: none;
+    }
+    
     .qrcode.listen {
         display: flex;
     }
     .qrcode.established {
         display: none;
     }
+
     .hit-zone {
         position: fixed;
         z-index: 100000;
