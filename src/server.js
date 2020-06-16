@@ -96,6 +96,13 @@ app.get('/qrcode/hide', function(req, res) {
   })
 })
 
+app.get('/qrcode/restart', function(req, res) {
+  restartQrcodeServer()
+  res.json({
+    message: 'server restarted'
+  })
+})
+
 app.post('/printer-attributes', async function(req, res) {
   let printers = await printer.getPrinterAttributes(printerName, function(name, ppd){
     res.json({
@@ -189,7 +196,7 @@ function createQRCode() {
     request(qrcodeJsonUrl, { json: true }, (err, res, body) => {
       if (err) { return console.log(err); }
       let remoteTouchpadUrl = body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`)
-      console.log("\n################ qrcode url ###################\n", body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`), "\n###################################\n");
+      console.log("\n################ qrcode url ###################\n", body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`), "\n###############################################\n");
       QRCode.toFile(join("/persistent","qrcode.png"),remoteTouchpadUrl, {
         width: 111
       })
@@ -201,7 +208,7 @@ function createQRCode() {
 function runNetstat() {
   netstat({}, function (data) {
     if(data.local.port == 8855 && data.state != null){
-      console.log("\n################ netstat line ###################\n", data, "\n###################################\n")
+      console.log("\n################ netstat line ###################\n", data, "\n###############################################\n")
       createQRCode()
         window.send('setQrCodeState', {
           state: data.state.toLowerCase()
@@ -224,7 +231,7 @@ async function restartQrcodeServer() {
   });
 }
 
-var job = new CronJob('*/10 * * * * *', function() {
+var job = new CronJob('*/5 * * * * *', function() {
   runNetstat()
 }, null, true, 'America/Los_Angeles');
 

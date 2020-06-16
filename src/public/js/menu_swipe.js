@@ -52,7 +52,7 @@ addStyle(`
     #qrcode.established {
         display: none;
     }
-    
+
     .qrcode.listen {
         display: flex;
     }
@@ -122,6 +122,13 @@ function execTouchStart() {
         xhr.send()
 }
 
+function restartQrcodeServer() { 
+    var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {};
+        xhr.open('GET', 'http://localhost:8200/restart');
+        xhr.send()
+}
+
 hitZone.addEventListener("touchstart", touchStart);
 hitZone.addEventListener("touchend", touchEnd);  //listen for mouse up event on body, not just the element you originally clicked on
 
@@ -136,6 +143,10 @@ oak.on('setQrCodeState',function(obj){
         qrWrapper.classList.add(obj.state)
         qrcode.classList.add(obj.state)
     }
+})
+
+window.addEventListener('reload', function(){
+    restartQrcodeServer()
 })
 
 
