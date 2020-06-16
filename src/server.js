@@ -224,7 +224,7 @@ async function restartQrcodeServer() {
   });
 }
 
-var job = new CronJob('* * * * * *', function() {
+var job = new CronJob('*/10 * * * * *', function() {
   runNetstat()
 }, null, true, 'America/Los_Angeles');
 
