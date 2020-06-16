@@ -122,9 +122,10 @@ hitZone.addEventListener("mouseup", touchEnd);
 oak.on('setQrCodeState',function(obj){
     let qrWrapper = document.querySelector('.qrcode')
     if(obj.state != null && (obj.state == 'listen' || obj.state == 'established')){
-        qrWrapper.classList.remove('listen')
-        qrWrapper.classList.remove('established')
+        qrWrapper.classList.remove('listen', 'established')
+        qrcode.classList.remove('listen', 'established')
         qrWrapper.classList.add(obj.state)
+        qrcode.classList.add(obj.state)
     }
 })
 
