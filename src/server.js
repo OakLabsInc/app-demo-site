@@ -189,7 +189,7 @@ function createQRCode() {
     request(qrcodeJsonUrl, { json: true }, (err, res, body) => {
       if (err) { return console.log(err); }
       let remoteTouchpadUrl = body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`)
-      console.log("################ qrcode url ###################\n", body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`), "###################################\n");
+      console.log("\n################ qrcode url ###################\n", body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`), "\n###################################\n");
       QRCode.toFile(join("/persistent","qrcode.png"),remoteTouchpadUrl, {
         width: 111
       })
@@ -201,7 +201,7 @@ function createQRCode() {
 function runNetstat() {
   netstat({}, function (data) {
     if(data.local.port == 8855 && data.state != null){
-      console.log("################ netstat line ###################\n", data, "###################################\n")
+      console.log("\n################ netstat line ###################\n", data, "\n###################################\n")
       createQRCode()
         window.send('setQrCodeState', {
           state: data.state.toLowerCase()
@@ -210,9 +210,23 @@ function runNetstat() {
   })
 }
 
-var job = new CronJob('59 * * * * *', function() {
+async function restartQrcodeServer() {
+  let url = `http://localhost${process.env.QRCODE_PORT}/restart`
+
+  await request(url, { json: true }, (err, res, body) => {
+    if (err) { return console.log(err); }
+    console.log("Response from QRCode Server: ", res.statusCode)
+    setTimeout(function(){
+      createQRCode()
+    },200)
+
+  
+  });
+}
+
+var job = new CronJob('10,20,30,40,50,60 * * * * *', function() {
   runNetstat()
 }, null, true, 'America/Los_Angeles');
 
 job.start();
-createQRCode()
+restartQrcodeServer()
