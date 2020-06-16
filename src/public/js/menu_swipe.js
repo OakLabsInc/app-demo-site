@@ -43,6 +43,14 @@ addStyle(`
         right: 0;
         bottom: 0;
         z-index: 500000;
+        display: none;
+
+    }
+    .qrcode.listen {
+        display: flex;
+    }
+    .qrcode.established {
+        display: none;
     }
     .hit-zone {
         position: fixed;
@@ -111,5 +119,14 @@ hitZone.addEventListener("touchend", touchEnd);  //listen for mouse up event on 
 
 hitZone.addEventListener("mousedown", touchStart);
 hitZone.addEventListener("mouseup", touchEnd);
+
+oak.on('setQrCodeState',function(obj){
+    let qrWrapper = document.querySelector('.qrcode')
+    if(obj.state != null && (obj.state == 'listen' || obj.state == 'established')){
+        qrWrapper.classList.remove('listen')
+        qrWrapper.classList.remove('established')
+        qrWrapper.classList.add(obj.state)
+    }
+})
 
 

@@ -78,6 +78,24 @@ app.get('/close', function(req, res) {
   window.close()
 })
 
+app.get('/qrcode/show', function(req, res) {
+  window.send('setQrCodeState',{
+    state: 'listen'
+  })
+  res.json({
+    message: 'show'
+  })
+})
+
+app.get('/qrcode/hide', function(req, res) {
+  window.send('setQrCodeState',{
+    state: 'established'
+  })
+  res.json({
+    message: 'hide'
+  })
+})
+
 app.post('/printer-attributes', async function(req, res) {
   let printers = await printer.getPrinterAttributes(printerName, function(name, ppd){
     res.json({
@@ -171,7 +189,7 @@ function createQRCode() {
     request(qrcodeJsonUrl, { json: true }, (err, res, body) => {
       if (err) { return console.log(err); }
       let remoteTouchpadUrl = body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`)
-      console.log("################ qrcode url ###################\n", body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`));
+      console.log("################ qrcode url ###################\n", body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`), "###################################\n");
       QRCode.toFile(join("/persistent","qrcode.png"),remoteTouchpadUrl, {
         width: 111
       })
@@ -182,8 +200,8 @@ function createQRCode() {
 
 function runNetstat() {
   netstat({}, function (data) {
-    if(data.local.port == 8855 && data.state == 'LISTEN'){
-      console.log("################ netstat line ###################\n", data)
+    if(data.local.port == 8855 && data.state != null){
+      console.log("################ netstat line ###################\n", data, "###################################\n")
       createQRCode()
         window.send('setQrCodeState', {
           state: data.state.toLowerCase()
