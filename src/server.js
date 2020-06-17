@@ -11,6 +11,7 @@ var netstat = require('node-netstat')
 var CronJob = require('cron').CronJob;
 
 oak.catchErrors()
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true
 
 const express = require('express')
 const app = express()
@@ -96,10 +97,12 @@ app.get('/qrcode/hide', function(req, res) {
   })
 })
 
-app.get('/qrcode/restart', function(req, res) {
-  restartQrcodeServer()
-  res.json({
-    message: 'server restarted'
+app.get('/qrcode/restart', async function(req, res) {
+  let url = `http://${qrcodeJsonHost}:${process.env.QRCODE_PORT}/restart`
+  await request(url, { json: true }, (err, res, body) => {
+    if (err) { return console.log(err); }
+    console.log("Response from QRCode Server: ", res.statusCode)
+    createQRCode()
   })
 })
 
@@ -150,7 +153,7 @@ app.post('/send-cart', function (req, res) {
   //console.log(req.body)
   let paymentPort = process.env.PAYMENT_PORT || 9002
   let paymentHost = process.env.PAYMENT_HOST || "localhost"
-  let terminalIp = process.env.TERMINAL_IP || "192.168.86.245"
+  let terminalIp = process.env.TERMINAL_IP || "192.168.86.43"
   let request = {
     "cart": {
       "total": parseFloat(req.body.subtotal).toFixed(2).toString(),
@@ -191,15 +194,17 @@ function loadWindow (opts) {
   
 }
 
-function createQRCode() {
+async function createQRCode() {
   if(process.env.HOST_DOMAIN) {
-    request(qrcodeJsonUrl, { json: true }, (err, res, body) => {
+    await request(qrcodeJsonUrl, { json: true }, (err, res, body) => {
       if (err) { return console.log(err); }
       let remoteTouchpadUrl = body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`)
       console.log("\n################ qrcode url ###################\n", body.machine.replace(/[0-9.]+:/i, `${process.env.HOST_DOMAIN}:`), "\n###############################################\n");
       QRCode.toFile(join("/persistent","qrcode.png"),remoteTouchpadUrl, {
         width: 111
       })
+
+      window.send('pageReload')
     
     });
   }
@@ -209,31 +214,27 @@ function runNetstat() {
   netstat({}, function (data) {
     if(data.local.port == 8855 && data.state != null){
       console.log("\n################ netstat line ###################\n", data, "\n###############################################\n")
-      createQRCode()
-        window.send('setQrCodeState', {
-          state: data.state.toLowerCase()
-        })
+      // createQRCode()
+      window.send('setQrCodeState', {
+        state: data.state.toLowerCase()
+      })
       }
   })
 }
 
-async function restartQrcodeServer() {
-  let url = `http://localhost${process.env.QRCODE_PORT}/restart`
+// async function restartQrcodeServer() {
+//   let url = `http://localhost${process.env.QRCODE_PORT}/restart`
 
-  await request(url, { json: true }, (err, res, body) => {
-    if (err) { return console.log(err); }
-    console.log("Response from QRCode Server: ", res.statusCode)
-    setTimeout(function(){
-      createQRCode()
-    },200)
+//   await request(url, { json: true }, (err, res, body) => {
+//     if (err) { return console.log(err); }
+//     console.log("Response from QRCode Server: ", res.statusCode)
+//     createQRCode()
+//   });
+// }
 
-  
-  });
-}
-
-var job = new CronJob('*/5 * * * * *', function() {
+var job = new CronJob('*/2 * * * * *', function() {
   runNetstat()
 }, null, true, 'America/Los_Angeles');
 
 job.start();
-restartQrcodeServer()
+// restartQrcodeServer()

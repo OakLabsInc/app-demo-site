@@ -145,8 +145,8 @@ oak.on('setQrCodeState',function(obj){
     }
 })
 
-window.addEventListener('reload', function(){
-    restartQrcodeServer()
-})
+
+
+
 
 

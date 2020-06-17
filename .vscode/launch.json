@@ -18,9 +18,10 @@
           "SITE_NAME":"pizza",
           "PORT":"9001",
           "HOST_DOMAIN": "covid.oak.host",
+          "IDLE_TIMEOUT": "90",
           "QRCODE_PORT":"8200",
-          "QRCODE_HOST":"192.168.86.207",
-          "PAYMENT_HOST":"192.168.86.207",
+          "QRCODE_HOST":"192.168.86.28",
+          "PAYMENT_HOST":"192.168.86.43",
           "TZ":"America/Los_Angeles",
           "PAYMENT_PORT": "9002"
         }
