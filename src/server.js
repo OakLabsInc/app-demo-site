@@ -11,7 +11,7 @@ var netstat = require('node-netstat')
 var CronJob = require('cron').CronJob;
 
 oak.catchErrors()
-process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 
 const express = require('express')
 const app = express()
@@ -222,19 +222,18 @@ function runNetstat() {
   })
 }
 
-// async function restartQrcodeServer() {
-//   let url = `http://localhost${process.env.QRCODE_PORT}/restart`
-
-//   await request(url, { json: true }, (err, res, body) => {
-//     if (err) { return console.log(err); }
-//     console.log("Response from QRCode Server: ", res.statusCode)
-//     createQRCode()
-//   });
-// }
+async function restartQrcodeServer() {
+  let url = `http://${qrcodeJsonHost}:${process.env.QRCODE_PORT}/restart`
+  await request(url, { json: true }, (err, res, body) => {
+    if (err) { return console.log(err); }
+    console.log("Response from QRCode Server: ", res.statusCode)
+    createQRCode()
+  })
+}
 
 var job = new CronJob('*/2 * * * * *', function() {
   runNetstat()
 }, null, true, 'America/Los_Angeles');
 
 job.start();
-// restartQrcodeServer()
+restartQrcodeServer()
